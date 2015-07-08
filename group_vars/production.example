@@ -1,0 +1,8 @@
+deploy_user: bob
+gh_pubkey_user: bobsmith
+webserver_name: domainhere.com
+mysql_root_password: 12345
+mysql_db_password: 67890
+s3_key: 123_key_here
+s3_secret: 123_secret_here
+s3_db_backup_location: s3://{{ app_name }}/db_backups

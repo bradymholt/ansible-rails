@@ -1,0 +1,76 @@
+---
+galaxy_info:
+  author: Cheng Long 
+  description: Install nginx with passenger on Debian/Ubuntu 
+  # Some suggested licenses:
+  # - BSD (default)
+  # - MIT
+  # - GPLv2
+  # - GPLv3
+  # - Apache
+  # - CC-BY
+  license: WTFPL 
+  min_ansible_version: 1.7
+  #
+  # Below are all platforms currently available. Just uncomment
+  # the ones that apply to your role. If you don't see your 
+  # platform on this list, let us know and we'll get it added!
+  #
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+        - lucid
+        - maverick
+        - natty
+        - oneiric
+        - precise
+        - quantal
+        - raring
+        - saucy
+        - trusty
+  #- name: SLES
+  #  versions:
+  #  - all
+  #  - 10SP3
+  #  - 10SP4
+  #  - 11
+  #  - 11SP1
+  #  - 11SP2
+  #  - 11SP3
+  #- name: GenericLinux
+  #  versions:
+  #  - all
+  #  - any
+    - name: Debian
+      versions:
+      - all
+      - etch
+      - lenny
+      - squeeze
+      - wheezy
+  #
+  # Below are all categories currently available. Just as with
+  # the platforms above, uncomment those that apply to your role.
+  #
+  categories:
+  #- cloud
+  #- cloud:ec2
+  #- cloud:gce
+  #- cloud:rax
+  #- clustering
+  #- database
+  #- database:nosql
+  #- database:sql
+  - development
+  #- monitoring
+  #- networking
+  #- packaging
+  - system
+  #- web
+dependencies: []
+  # List your role dependencies here, one per line. Only
+  # dependencies available via galaxy should be listed here.
+  # Be sure to remove the '[]' above if you add dependencies
+  # to this list.
+  

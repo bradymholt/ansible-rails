@@ -1,0 +1,34 @@
+server {
+  gzip on;
+  listen 80;
+
+  gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript application/json;
+  server_name www.{{ webserver_name }};
+  root {{ deploy_directory }}/public;
+
+  passenger_enabled on;
+
+  client_max_body_size 100M;
+
+  location /robots.txt {}
+
+  location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+    expires 1y;
+    log_not_found off;
+  }
+
+  location ~ ^/(assets|images|javascripts|stylesheets|swfs|system)/ {
+    gzip_static on;
+    expires     max;
+    add_header  Cache-Control public;
+    add_header  Last-Modified "";
+    add_header  ETag "";
+
+    break;
+  }
+}
+
+server {
+        server_name {{ webserver_name }};
+        rewrite ^ http://www.{{ webserver_name }}$request_uri? permanent;
+}

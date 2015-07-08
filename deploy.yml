@@ -1,0 +1,8 @@
+---
+- name: deploy
+  hosts: all
+  gather_facts: false
+  remote_user: bholt
+  
+  roles:
+    - deploy

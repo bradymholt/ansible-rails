@@ -1,0 +1,41 @@
+- name: Install MySQL
+  apt: name={{ item }} update_cache=yes cache_valid_time=3600 state=present
+  with_items:
+    - python-mysqldb
+    - mysql-server
+- name: copy root cnf
+  template: src=.my.cnf.j2 dest=~/.my.cnf owner=root mode=0644
+- name: Start the MySQL service
+  service: 
+    name: mysql 
+    state: started
+    enabled: true
+- name: update mysql root password for all root accounts
+  mysql_user: 
+    name: root 
+    host: "{{ item }}" 
+    password: "{{ mysql_root_password }}"
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    check_implicit_admin: yes
+    priv: "*.*:ALL,GRANT"
+  with_items:
+    - "{{ inventory_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost 
+- name: remove the test database
+  mysql_db: name=test state=absent login_user=root login_password={{ mysql_root_password }}
+
+- name: Create the database
+  mysql_db: name={{ mysql_db_name }} state=present login_user=root login_password={{ mysql_root_password }}
+
+- name: Create the database users
+  mysql_user: name={{ mysql_db_user }} password={{ mysql_db_password }} host=localhost priv="*.*:ALL" state=present login_user=root login_password={{ mysql_root_password }}
+
+- name: copy backup script
+  template: src="s3mysqlbackup.sh.j2" dest="~/s3mysqlbackup.sh" mode="u+x"
+
+- name: setup backup cron
+  cron: name="Daily MySQL Backup" minute="0" hour="1"
+    job="bash /root/s3mysqlbackup.sh >/dev/null 2>&1"

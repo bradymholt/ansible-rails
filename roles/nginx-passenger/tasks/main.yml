@@ -1,0 +1,68 @@
+---
+- name: Remove apache2, nginx and passenger
+  apt: name={{ item }} state=absent
+  with_items:
+    - apache2
+    - nginx
+    - passenger
+
+- name: Install Passenger PGP key
+  apt_key: url='http://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0xAC40B2F7' state=present
+
+- name: Add HTTPS support for apt
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+
+- name: Find ubuntu/debian distro short name
+  shell: >
+    lsb_release -c | cut -d: -f2 | sed 's/\s//g'
+  register: distro
+
+- name: Add passenger source
+  template: src=passenger.list dest=/etc/apt/sources.list.d/passenger.list owner=root group=root mode=0600
+
+- name: Update
+  apt: update_cache=yes
+
+- name: Install packages
+  apt: name={{ item }} state=present
+  with_items:
+    - nginx-extras
+    - passenger
+
+- name: Ensure passenger_root is set
+  lineinfile:
+    dest=/etc/nginx/nginx.conf
+    state=present
+    backup=yes
+    regexp='#?\s*passenger_root /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini;'
+    line='passenger_root /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini;'
+
+- name: Ensure passenger_ruby is set
+  lineinfile:
+    dest=/etc/nginx/nginx.conf
+    state=present
+    backup=yes
+    backrefs=yes
+    regexp='#?\s*passenger_ruby /usr/bin/passenger_free_ruby;'
+    line='passenger_ruby /usr/bin/passenger_free_ruby;'
+
+- name: Remove the default app
+  command: rm -rf /etc/nginx/sites-enabled/default
+
+- name: Remove the default app config if exists
+  command: rm -rf /etc/nginx/sites-enabled/default
+
+- name: Remove the app's symlink if exists
+  command: rm -rf /etc/nginx/sites-enabled/{{ app_name }}
+
+- name: Configure nginx for the app
+  template: src=etc_nginx_sites-available.conf.j2 dest=/etc/nginx/sites-available/{{ app_name }} group=www-data owner=www-data force=yes
+
+- name: Enable the app
+  command: ln -s /etc/nginx/sites-available/{{ app_name }} /etc/nginx/sites-enabled/{{ app_name }}
+
+- name: Restart nginx
+  action: service name=nginx state=restarted

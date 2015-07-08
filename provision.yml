@@ -1,0 +1,14 @@
+---
+- name: provision
+  hosts: all
+  gather_facts: false
+  remote_user: root
+
+  roles:
+    - s3cmd
+    - rvm_io.rvm1-ruby
+    - nginx-passenger
+    - mysql
+    - webserver
+
+

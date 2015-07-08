@@ -1,0 +1,7 @@
+- name: install s3cmd
+  apt: name=s3cmd state=present
+- name: configure s3cmd
+  sudo: false
+  template:
+    src="s3cfg.j2"
+    dest="~/.s3cfg"

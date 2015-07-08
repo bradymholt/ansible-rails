@@ -1,0 +1,9 @@
+production:
+  adapter: mysql2
+  encoding: utf8
+  host: localhost
+  database: {{ mysql_db_name }}
+  pool: 5
+  username: {{ mysql_db_user }}
+  password: {{ mysql_db_password }}
+  timeout: 5000

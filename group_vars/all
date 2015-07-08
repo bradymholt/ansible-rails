@@ -1,0 +1,8 @@
+app_name: hfbctheoaks
+deploy_directory: "/home/{{ deploy_user }}/apps/{{ app_name }}"
+
+mysql_db_name: "{{ app_name }}"
+mysql_db_user: "{{ app_name }}"
+
+rvm1_rubies:
+  - 'ruby-1.9.3-p551'
