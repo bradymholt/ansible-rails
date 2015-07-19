@@ -2,7 +2,7 @@
 - name: deploy
   hosts: all
   gather_facts: false
-  remote_user: bholt
+  remote_user: {{ deploy_user }}
   
   roles:
     - deploy
