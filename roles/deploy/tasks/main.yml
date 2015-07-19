@@ -1,6 +1,6 @@
 - name: precompile assets
   local_action: command bundle exec rake assets:precompile chdir=../
-- name: copy files
+- name: copy files (src is Rails root folder)
   synchronize: src=../../../../ dest={{ deploy_directory }} delete=yes rsync_opts=--exclude=.git/,--exclude=log/,--exclude=tmp/cache
 - name: config database.yml
   template: src=database.yml.j2 dest={{ deploy_directory}}/config/database.yml
