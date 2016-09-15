@@ -39,4 +39,3 @@ This will:
  - `rake tmp:clear`
  - `rake log:clear`
  - `touch tmp/restart.txt` (restart the app)
-- 
