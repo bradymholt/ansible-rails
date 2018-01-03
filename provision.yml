@@ -6,7 +6,7 @@
 
   roles:
     - s3cmd
-    - rvm_io.rvm1-ruby
+    - rvm_io.ruby
     - nginx-passenger
     - mysql
     - webserver
