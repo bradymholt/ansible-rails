@@ -58,4 +58,4 @@ To provision your server, run: `rake provision`.  This will do the following:
 
 ## Deploying
 
-If you have already provisioned your server and want to redeploy changes to your Rails app, run `rake deploy`.  This will only run the deplay tasks from the playbook and be much faster.
+If you have already provisioned your server and want to redeploy changes to your Rails app, run `rake deploy`.  This will only run the deploy tasks from the playbook and be much faster.
