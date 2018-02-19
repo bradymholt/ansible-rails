@@ -1,0 +1,16 @@
+
+all:
+  vars:
+    app_name: my-app
+    deploy_user: bholt
+    gh_pubkey_user: bradymholt
+    ruby_version: ruby-2.4.3
+production:
+  hosts:
+    159.65.171.101
+  vars:
+    webserver_name: foobar.geekytidbits.com
+    mysql_root_password: 12345
+    mysql_db_password: 67890
+    s3_key: 123_key_here
+    s3_secret: 123_secret_here

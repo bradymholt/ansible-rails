@@ -1,0 +1,17 @@
+
+all:
+  vars:
+    # The following vars apply globally; additional config is in group_vars/all.
+    app_name: my-app            # name of application
+    deploy_user: bholt          # name of the remote user account for provisioning and deployment
+    gh_pubkey_user: bradymholt  # the Public key for this GitHub user will be added to authorized_keys for deploy_user
+    ruby_version: ruby-2.4.3    # version of Ruby
+production:
+  hosts:
+    159.65.171.101              # The hostname or IP address of the remote server
+  vars:
+    webserver_name: foobar.geekytidbits.com  # Virtual server name for Nginx config 
+    mysql_root_password: 12345  # root pasword for MySQL instance
+    mysql_db_password: 67890    # The application database will be configured with this password
+    s3_key: 123_key_here        # S3 Access Key used for uploading database backups
+    s3_secret: 123_secret_here  # S3 Access Secret used for uploading database backups
