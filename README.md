@@ -1,4 +1,3 @@
-
 # ansible-rails
 
 This project is an Ansible playbook for provisioning and deploying a Rails/MySQL app to an Ubuntu server.  It is intended to be added to an existing Rails application folder.
