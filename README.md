@@ -12,7 +12,7 @@ This playbook has been tested with:
 
 1. [Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html) >= 2.4.1 must be installed
 1. This playbook assumes you are targeting MySQL for your production database and have `gem 'mysql2'` included in your Gemfile.
-1. From your Rails application folder run the follwoing to add this project to a new folder in your app called "ops" and initialize the config file:
+1. From your Rails application folder run the following to add this project to a new folder in your app called "ops" and initialize the config file:
 ```
 git clone https://github.com/bradymholt/ansible-rails.git ops && \
 rm -rf ./ops/.git && \
