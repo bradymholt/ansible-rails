@@ -32,7 +32,7 @@ end
 
 ## Provisioning
 
-Provisiong is used to to setup the the server and initially deploy the application.
+Provisioning is used to to setup the the server and initially deploy the application.
 
 To provision your server, run: `rake provision`.  This will do the following:
 
