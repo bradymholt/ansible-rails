@@ -1,5 +1,1 @@
-# Variables
-/group_vars/production
-
-# Inventory files
-/production
+config.yml

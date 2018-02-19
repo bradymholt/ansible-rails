@@ -1,68 +1,73 @@
 ---
-- name: Remove apache2, nginx and passenger
+- name: remove apache2, nginx and passenger
   apt: name={{ item }} state=absent
   with_items:
     - apache2
     - nginx
     - passenger
 
-- name: Install Passenger PGP key
-  apt_key: url='http://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0xAC40B2F7' state=present
+- name: Phusion Passenger - add APT key
+  apt_key: keyserver=keyserver.ubuntu.com id=561F9B9CAC40B2F7 state=present
 
-- name: Add HTTPS support for apt
-  apt: name={{ item }} state=present update_cache=yes
-  with_items:
-    - apt-transport-https
-    - ca-certificates
+- name: Phusion Passenger - add APT repository
+  apt_repository:
+    repo: deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ ansible_distribution_release }} main
+    state: present
 
 - name: Find ubuntu/debian distro short name
   shell: >
     lsb_release -c | cut -d: -f2 | sed 's/\s//g'
   register: distro
 
-- name: Add passenger source
+- name: Phusion Passenger - add source
   template: src=passenger.list dest=/etc/apt/sources.list.d/passenger.list owner=root group=root mode=0600
 
-- name: Update
-  apt: update_cache=yes
-
-- name: Install packages
+- name: Phusion Passenger - install packages
   apt: name={{ item }} state=present
   with_items:
     - nginx-extras
     - passenger
 
-- name: Ensure passenger_root is set
+- name: Phusion Passenger - ensure passenger.conf included in nginx.conf
   lineinfile:
     dest=/etc/nginx/nginx.conf
     state=present
     backup=yes
-    regexp='#?\s*passenger_root /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini;'
-    line='passenger_root /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini;'
+    regexp='passenger.conf'
+    line='include /etc/nginx/passenger.conf;'
 
-- name: Ensure passenger_ruby is set
+- name: Phusion Passenger - ensure passenger_root is excluded
   lineinfile:
     dest=/etc/nginx/nginx.conf
-    state=present
+    state=absent
     backup=yes
-    backrefs=yes
-    regexp='#?\s*passenger_ruby /usr/bin/passenger_free_ruby;'
-    line='passenger_ruby /usr/bin/passenger_free_ruby;'
+    regexp='passenger_root'
 
-- name: Remove the default app
-  command: rm -rf /etc/nginx/sites-enabled/default
+- name: nginx - remove the default app
+  file:
+    state: absent
+    path: /etc/nginx/sites-enabled/default
 
-- name: Remove the default app config if exists
-  command: rm -rf /etc/nginx/sites-enabled/default
+- name: nginx - remove the app symlink if exists
+  file:
+    state: absent
+    path: /etc/nginx/sites-enabled/{{ app_name }}
 
-- name: Remove the app's symlink if exists
-  command: rm -rf /etc/nginx/sites-enabled/{{ app_name }}
+- name: generate a UUID for SECRET_KEY_BASE env var
+  command: "uuidgen"
+  register: uuidgen_output
 
-- name: Configure nginx for the app
+- set_fact:
+    secret_key_base: "{{ uuidgen_output.stdout }}"
+
+- name: nginx - setup config for app
   template: src=etc_nginx_sites-available.conf.j2 dest=/etc/nginx/sites-available/{{ app_name }} group=www-data owner=www-data force=yes
 
-- name: Enable the app
-  command: ln -s /etc/nginx/sites-available/{{ app_name }} /etc/nginx/sites-enabled/{{ app_name }}
+- name: nginx - enable the app
+  file:
+    state: link
+    src: /etc/nginx/sites-available/{{ app_name }}
+    dest: /etc/nginx/sites-enabled/{{ app_name }}
 
-- name: Restart nginx
+- name: nginx - restart
   action: service name=nginx state=restarted

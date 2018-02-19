@@ -1,16 +1,23 @@
-- name: add user and create ssh key  
-  user: name={{ deploy_user }} shell=/bin/bash groups=rvm append=true
-- name: Create authorized_keys for user
+- name: create deploy user
+  user: name={{ deploy_user }} shell=/bin/bash append=true
+
+- name: add deploy user public key to authorized_keys
   authorized_key: user={{ deploy_user }} key=https://github.com/{{ gh_pubkey_user }}.keys
-- name: Add user to sudoers
+
+- name: add deploy user to sudoers
   lineinfile:
     "dest=/etc/sudoers
     regexp='^{{ deploy_user }} ALL'
     line='{{ deploy_user }} ALL=(ALL) NOPASSWD: ALL'
     state=present"
-- name: Creates deploy_directory directory
+
+- name: create deploy directory
   file: path={{ deploy_directory }} state=directory owner={{ deploy_user }} group=www-data mode=0775
-- name: Install libraries
+
+- name: update apt cache
+  apt: update_cache=yes
+
+- name: install base libraries
   apt: name={{ item }} state=present
   with_items:
     - libxslt-dev

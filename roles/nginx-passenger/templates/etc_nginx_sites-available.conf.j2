@@ -3,14 +3,14 @@ server {
   listen 80;
 
   gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript application/json;
-  server_name www.{{ webserver_name }};
+  server_name {{ webserver_name }};
   root {{ deploy_directory }}/public;
-
-  passenger_enabled on;
   
-  # This Rails web app will use Ruby 1.9.3, as installed by RVM
-  passenger_ruby /usr/local/rvm/wrappers/ruby-1.9.3-p551/ruby;
-
+  # Turn on Passenger
+  passenger_enabled on;
+  passenger_ruby {{ phusion_ruby_path }};
+  passenger_env_var SECRET_KEY_BASE {{ secret_key_base }};
+  
   client_max_body_size 100M;
 
   location /robots.txt {}
