@@ -11,6 +11,6 @@ production:
   vars:
     webserver_name: foobar.geekytidbits.com  # Virtual server name for Nginx config 
     mysql_root_password: 12345  # root pasword for MySQL instance
-    mysql_db_password: 67890    # The application database will be configured with this password
+    mysql_db_password: 67890    # the application database will be configured with this password
     s3_key: 123_key_here        # S3 Access Key used for uploading database backups
     s3_secret: 123_secret_here  # S3 Access Secret used for uploading database backups
