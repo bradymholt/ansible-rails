@@ -45,6 +45,7 @@ To provision your server, run: `rake provision`.  This will do the following:
 - Create a user with ssh access and sudo authorization
 - Setup a daily backup job to backup MySQL database to S3
 - Create an app directory with appropriate permissions where Nginx config is pointing to
+- Define an environment variable named `SECRET_KEY_BASE` with a unique uuid value.
 - Deploy the application:
   - Precompile assets locally with `rake assets:precompile`.
   - Copy app files to to remote server in the deploy directory
