@@ -12,7 +12,13 @@ This playbook has been tested with:
 
 1. [Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html) >= 2.4.1 must be installed
 1. This playbook assumes you are targeting MySQL for your production database and have `gem 'mysql2'` included in your Gemfile.
-1. From your Rails application folder run: `\curl -sSL https://raw.githubusercontent.com/bradymholt/ansible-rails/master/installer.sh | bash` which will:
+1. From your Rails application folder run:
+   
+   ``` 
+   \curl -sSL https://raw.githubusercontent.com/bradymholt/ansible-rails/master/installer.sh | bash
+   ```
+ 
+  which will:
    1. Add this project to a new folder in your app called "ops"
    2. Initialize the config file
    3. Add 2 new rake tasks to your Rakefile: `provision` and `deploy`.
