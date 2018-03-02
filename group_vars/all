@@ -12,4 +12,4 @@ rvm1_install_path: "/home/{{ deploy_user }}/.rvm"
 
 phusion_ruby_path: "/home/{{ deploy_user }}/.rvm/wrappers/{{ruby_version}}/ruby" 
 s3_db_backup_location: s3://{{ app_name }}/db_backups
-letsencrypt_use_live_ca=true  # If true, will use the Live Let's Encrypt ACME servers; otherwise will use staging server
+letsencrypt_use_live_ca: true  # If true, will use the Live Let's Encrypt ACME servers; otherwise will use staging server
