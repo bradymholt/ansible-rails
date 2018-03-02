@@ -8,6 +8,11 @@
     - s3cmd
     - nodejs
     - nginx-passenger
+    - role: ssl
+      when: use_ssl
+      domainsets:
+        - domains:
+          - "{{ webserver_name }
     - mysql
 
 - name: deploy

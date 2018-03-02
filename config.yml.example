@@ -9,7 +9,8 @@ production:
   hosts:
     159.65.171.101              # The hostname or IP address of the remote server
   vars:
-    webserver_name: foobar.geekytidbits.com  # Virtual server name for Nginx config 
+    webserver_name: demo.geekytidbits.com  # Virtual server name for Nginx config 
+    use_ssl: true               # If true, SSL cert will be obtained from Let's Encrypt and Nginx provisioned for SSL
     mysql_root_password: 12345  # root pasword for MySQL instance
     mysql_db_password: 67890    # the application database will be configured with this password
     s3_key: 123_key_here        # S3 Access Key used for uploading database backups
