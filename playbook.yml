@@ -12,7 +12,7 @@
       when: use_ssl
       domainsets:
         - domains:
-          - "{{ webserver_name }
+          - "{{ webserver_name }}"
     - mysql
 
 - name: deploy
