@@ -61,13 +61,11 @@
     secret_key_base: "{{ uuidgen_output.stdout }}"
 
 - name: nginx - setup config for app
-  template: src=etc_nginx_sites-available.conf.j2 dest=dest={{ nginx_conf_file }} group={{ webserver_user }} owner={{ webserver_user }} force=yes
+  template: src=etc_nginx_sites-available.conf.j2 dest={{ nginx_conf_file }} group={{ webserver_user }} owner={{ webserver_user }} force=yes
 
 - name: nginx - enable the app
   file:
     state: link
     src: "{{ nginx_conf_file }}"
     dest: /etc/nginx/sites-enabled/{{ app_name }}
-
-- name: nginx - restart
-  action: service name=nginx state=restarted
+  notify: Reload nginx
