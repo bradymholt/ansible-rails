@@ -1,2 +1,2 @@
 ---
-# vars file for ansible-nginx-passenger
+webserver_user: www-data

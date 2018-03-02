@@ -3,17 +3,17 @@
   hosts: all
   remote_user: root
   roles:
-    - webserver
     - rvm_io.ruby
     - s3cmd
     - nodejs
+    - mysql
     - nginx-passenger
     - role: ssl
       when: use_ssl
       domainsets:
         - domains:
           - "{{ webserver_name }}"
-    - mysql
+    - webserver
 
 - name: deploy
   hosts: all

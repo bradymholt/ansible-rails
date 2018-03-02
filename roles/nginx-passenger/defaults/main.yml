@@ -1,2 +1,3 @@
 ---
-# defaults file for ansible-nginx-passenger
+nginx_conf_dir: /etc/nginx
+nginx_conf_file: "{{ nginx_conf_dir }}/sites-available/{{ app_name }}.conf"
