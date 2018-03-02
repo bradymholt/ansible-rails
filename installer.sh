@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [[ ! -f config.ru ]] ; then
+    echo 'It appears the current working directory is not a Rails application.'
+    exit 1
+fi
+
 # Clone ansible-rails into a folder called ops/
 git clone https://github.com/bradymholt/ansible-rails.git ops && \
 
