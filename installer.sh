@@ -12,6 +12,9 @@ rm -rf ./ops/.git && \
 # Initial the config file using the template
 mv ops/config.yml.example ops/config.yml
 
+# Add ops/config.yml to .gitignore
+echo "ops/config.yml" >> .gitignore
+
 # Add new tasks to Rakefile
 cat <<EOT >> ./Rakefile
 
