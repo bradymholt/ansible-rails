@@ -1,5 +1,13 @@
 # ansible-rails
 
+<img align="left" src="https://user-images.githubusercontent.com/759811/210273710-b13913e2-0a71-4d9d-94da-1fe538b8a73e.gif"/>
+
+<br/>
+
+ &nbsp;**Would you take a quick second and ⭐️ my repo?**
+
+<br/>
+
 This project is an Ansible playbook for provisioning and deploying a Rails/MySQL app to an Ubuntu server.  It is intended to be added to an existing Rails application folder.  Tested with: Rails 5.1.5, Ruby 2.4.3, Ubuntu 16.04 (Xenial).
 
 ## Demo
